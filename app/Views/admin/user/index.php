@@ -57,6 +57,9 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-auto">
+                                                <a href="<?php echo route_to('user.edit', $user["id"]) ?>">
+                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt fa-fw"></i> Edit</button>
+                                                </a>
                                                 <form class="d-inline" method="post" action="<?php echo route_to('user.delete', $user["id"]) ?>" onclick="return confirm('Delete data?');">
                                                     <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can fa-fw"></i> Delete</button>
                                                 </form>

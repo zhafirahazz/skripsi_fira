@@ -54,6 +54,8 @@ $routes->group('admin', ['filter' => 'auth-filter'], static function ($route) {
         $userRoute->get('new', 'Management\UserController::create', ["as" => "user.create"]);
         $userRoute->post('store', 'Management\UserController::store', ["as" => "user.store"]);
         $userRoute->post('(:num)/delete', 'Management\UserController::delete/$1', ["as" => "user.delete"]);
+        $userRoute->get('(:num)/edit', 'Management\UserController::edit/$1', ["as" => "user.edit"]);
+        $userRoute->post('(:num)', 'Management\UserController::update/$1', ["as" => "user.update"]);
     });
     $route->group('student', static function ($studentRoute) {
         $studentRoute->get('', 'Management\StudentController::index', ["as" => "student.index"]);

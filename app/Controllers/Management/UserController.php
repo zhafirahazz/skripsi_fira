@@ -5,6 +5,7 @@ namespace App\Controllers\Management;
 use App\Controllers\BaseController;
 use App\Models\Role;
 use App\Models\User;
+use Exception;
 
 class UserController extends BaseController
 {
@@ -49,6 +50,43 @@ class UserController extends BaseController
         $message = "Data berhasil ditambahkan!";
         $this->session->setFlashdata('alert_success', $message);
         return redirect()->route('user.index');
+    }
+
+    public function edit($id)
+    {
+        $user = $this->model->where('id', $id)->first();
+        // dd($user);
+        return view('/admin/user/edit', ["user" => $user]);
+    }
+
+    public function update($id)
+    {
+        try {
+            $user = $this->model->where('id', $id)->first();
+            $data = [
+                "name" => $this->request->getPost('name'),
+                "email" => $this->request->getPost('email'),
+                "new_password" => $this->request->getPost('new_password'),
+                "c_password" => $this->request->getPost('c_password'),
+                "role_id" => $this->request->getPost('role'),
+            ];
+
+            $user["name"] = $data["name"];
+            $user["email"] = $data["email"];
+            if (isset($data["new_password"])) {
+                if ($data["new_password"] != $data["c_password"]) {
+                    throw new Exception("Password dan konfirmasi password tidak sama!");
+                }
+                $user["password"] = password_hash($data["new_password"], PASSWORD_BCRYPT);
+            }
+            $this->model->save($user);
+
+            $this->session->setFlashdata('alert_success', 'Berhasil merubah data pengguna');
+            return redirect()->route('user.index');
+        } catch (Exception $e) {
+            $this->session->setFlashdata('error', $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function delete($id)
