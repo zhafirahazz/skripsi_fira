@@ -1,0 +1,11 @@
+#app{
+    min-height: 88vh;
+}
+.footer{
+    min-height: 5vh;
+}
+.img-200{
+    /* Override any sizing */
+    min-height: 50px;
+    min-width: 200px;
+}
