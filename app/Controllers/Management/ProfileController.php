@@ -5,6 +5,7 @@ namespace App\Controllers\Management;
 use App\Controllers\BaseController;
 use App\Models\Role;
 use App\Models\User;
+use Exception;
 
 class ProfileController extends BaseController
 {
@@ -35,6 +36,36 @@ class ProfileController extends BaseController
 
         $role = $this->Role->findAll();
         return view('admin/profile/edit', ["profile" => $profile, "roles" => $role]);
+    }
+
+
+    public function updatePassword($id){
+       try{
+        $data = [
+            "old_pwd" => $this->request->getPost('password'),
+            "new_pwd" => $this->request->getPost('new_password'),
+            "c_pwd" => $this->request->getPost('c_password'),
+        ];
+
+        if($data["new_pwd"] != $data["c_pwd"]){
+            throw new Exception("Password dan konfirmasi tidak sesuai!");
+        }
+
+        $profile = $this->model->where('id', $id)->first();
+        if (!password_verify($data["old_pwd"], $profile["password"])) {
+            throw new Exception("Password lama salah!");
+        }
+
+        $profile["password"] = password_hash($data["new_pwd"], PASSWORD_BCRYPT);
+        $this->model->save($profile);
+        $this->session->setFlashdata('success', "Data berhasil diubah");
+        return redirect()->to(route_to('profile.index'));
+
+       }catch(Exception $e){
+
+        $this->session->setFlashdata('error', $e->getMessage());
+        return redirect()->to(route_to('profile.index'));
+       }
     }
 
     public function update($id)

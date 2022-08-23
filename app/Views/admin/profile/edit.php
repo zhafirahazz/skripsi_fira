@@ -48,7 +48,7 @@
             <div class="card">
                 <button type="button" class="btn btn-primary" disabled>Ganti Password</button>
                 <div class="card-body">
-                    <form action="#" method="post">
+                    <form  action="<?php echo route_to('profile.update.pwd', $profile["id"]) ?>" method="post">
                         <div class="row mt-4 g-3 align-items-center">
                             <div class="col-md-5">
                                 <label for="inputPasswordLama" class="col-form-label"><b>Password Lama</b></label>
@@ -62,7 +62,7 @@
                                 <label for="inputPasswordBaru" class="col-form-label"><b>Password Baru</b></label>
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" id="inputPasswordBaru" type="password" name="password">
+                                <input class="form-control" id="inputPasswordBaru" type="password" name="new_password">
                             </div>
                         </div>
                         <div class="row mt-4 g-3 align-items-center">
@@ -70,7 +70,7 @@
                                 <label for="inputKonfirmasiPassword" class="col-form-label"><b>Konfirmasi Password</b></label>
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" id="inputKonfirmasiPassword" type="password" name="password">
+                                <input class="form-control" id="inputKonfirmasiPassword" type="password" name="c_password">
                             </div>
                         </div>
                         <div class="text-end mt-4">

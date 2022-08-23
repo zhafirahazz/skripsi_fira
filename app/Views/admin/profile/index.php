@@ -4,6 +4,26 @@
 <div class="container mt-4">
     <h4><u><i class="fas fa-user fa-sm fa-fw mr-2"></i>Profile</u></h4>
 
+    <div>
+        <?php if (isset($_SESSION['error'])) : ?>
+            <div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <?php echo ($_SESSION['error']) ?>
+            </div>
+        <?php endif ?>
+        <?php if (isset($_SESSION['warning'])) : ?>
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <?php echo ($_SESSION['alert']) ?>
+            </div>
+        <?php endif ?>
+        <?php if (isset($_SESSION['success'])) : ?>
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <?php echo ($_SESSION['success']) ?>
+            </div>
+        <?php endif ?>
+    </div>
     <div class="row mt-4">
         <div class="col">
             <div class="card">

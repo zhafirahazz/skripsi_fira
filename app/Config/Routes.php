@@ -48,6 +48,7 @@ $routes->group('admin', ['filter' => 'auth-filter'], static function ($route) {
         $profileRoute->get('', 'Management\ProfileController::index', ["as" => "profile.index"]);
         $profileRoute->get('(:num)/edit', 'Management\ProfileController::edit/$1', ["as" => "profile.edit"]);
         $profileRoute->post('(:num)/edit', 'Management\ProfileController::update/$1', ["as" => "profile.update"]);
+        $profileRoute->post('(:num)/update', 'Management\ProfileController::updatePassword/$1', ["as" => "profile.update.pwd"]);
     });
     $route->group('user', static function ($userRoute) {
         $userRoute->get('', 'Management\UserController::index', ["as" => "user.index"]);
