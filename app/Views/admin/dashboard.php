@@ -9,16 +9,16 @@
     <!-- Content Row Cost-->
     <div class="row">
         <?php
-        foreach ($cost as $costs) : ?>
+        foreach ($cost_stat as $cost) : ?>
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?= $costs->display ?>
+                                    <?= $cost->category_display ?>
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp0</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp <?= number_format($cost->total, 0, ",", ".") ?></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-fw fa-dollar-sign fa-2x text-gray-300"></i>
@@ -31,38 +31,27 @@
     </div>
     <!-- Content Row Benefit-->
     <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Tangible Benefit</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp0</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-fw fa-wallet fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Intangible Benefit</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp0</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-fw fa-wallet fa-2x text-gray-300"></i>
+        <?php
+        foreach ($benefit_stat as $benefit) : ?>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <?= $benefit->category_display ?>        
+                            </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp <?= number_format($benefit->total, 0, ",", ".") ?></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-fw fa-wallet fa-2x text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endforeach ?>
+
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
@@ -70,7 +59,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Data User (Pengguna)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $user_count[0]->count ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-fw fa-table fa-2x text-gray-300"></i>
@@ -86,7 +75,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Data Guru</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $teacher_count[0]->count ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-fw fa-table fa-2x text-gray-300"></i>
@@ -107,8 +96,8 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+                    <div class="px-2">
+                        <canvas id="costChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -123,19 +112,10 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <canvas id="myPieChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Kelas X
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Kelas XI
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-info"></i> Kelas XII
-                        </span>
+                    <div class="pt-4 pb-2">
+                        <canvas id="studentPieChart" class="img-fluid">
+
+                        </canvas>
                     </div>
                 </div>
             </div>
@@ -151,8 +131,8 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+                    <div class="px-2">
+                        <canvas id="benefitChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -173,4 +153,92 @@
     </div>
 </div>
 
+<script>
+    const context = document.getElementById('studentPieChart').getContext('2d');
+    const studentChart = new Chart(context, {
+        type: "pie",
+        data: {
+            labels: <?= json_encode($student_count["label"]) ?>,
+            datasets: [{
+                label: 'Jumlah Siswa',
+                data: <?= json_encode($student_count["values"]) ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+    })
+
+    const costContext = document.getElementById('costChart').getContext('2d')
+    const costChart = new Chart(costContext, {
+        type: "bar",
+        data: {
+            labels: <?= json_encode($cost_chart["label"]) ?>,
+            datasets: [{
+                label: 'Nilai Biaya',
+                data: <?= json_encode($cost_chart["values"]) ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+    })
+
+    const benefitContext = document.getElementById('benefitChart').getContext('2d')
+    const benefitChart = new Chart(benefitContext, {
+        type: "bar",
+        data: {
+            labels: <?= json_encode($benefit_chart["label"]) ?>,
+            datasets: [{
+                label: 'Nilai Manfaat',
+                data: <?= json_encode($benefit_chart["values"]) ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+    })
+</script>
 <?= $this->endSection() ?>
