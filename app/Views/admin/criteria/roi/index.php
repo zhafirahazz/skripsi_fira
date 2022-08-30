@@ -29,7 +29,7 @@
                                 <div class="mb-3">
                                     <label for="profitInput" class="form-label">Keuntungan Investasi</label>
                                     <input type="text" class="form-control" id="profitInput" placeholder="0"
-                                    value="<?= $benefits == null ? 0 : $benefits->nominal ?>"
+                                    value="<?= (($benefits == null ? 0 : $benefits->nominal)-($costs == null? 0 : $costs->price)) ?>"
                                     disabled>
                                 </div>
                                 <a href="">
