@@ -8,7 +8,7 @@ use App\Models\CostValue;
 
 class ROI extends BaseController
 {
-   
+
     protected $model;
 
     public function __construct()
@@ -20,10 +20,12 @@ class ROI extends BaseController
 
     public function index()
     {
-        $values = $this->model
-            ->select('benefit_value.name_benefit, benefit_value.nominal')
-            ->from('benefit_value')
-            ->findAll();
-        return view('admin/criteria/roi/index', ["values" => $values]);
+        $db = \Config\Database::connect();
+        $costs = $db->query("SELECT SUM(price) as price FROM cost_value ORDER BY name_cost")->getResult();
+        $benefits = $db->query("SELECT SUM(nominal) as nominal FROM benefit_value ORDER BY name_benefit")->getResult();
+        return view('admin/criteria/roi/index', [
+            "costs" => $costs[0]? $costs[0] : null,
+            "benefits" => $benefits[0]? $benefits[0] : null
+        ]);
     }
 }

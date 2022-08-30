@@ -19,10 +19,9 @@ class NPV extends BaseController
 
     public function index()
     {
-        $values = $this->model
-            ->select('benefit_value.name_benefit, benefit_value.nominal')
-            ->from('benefit_value')
-            ->findAll();
-        return view('admin/criteria/npv/index', ["values" => $values]);
+        $db = \Config\Database::connect();
+        $costs = $db->query("SELECT * FROM cost_value ORDER BY name_cost")->getResult();
+        $benefits = $db->query("SELECT * FROM benefit_value ORDER BY name_benefit")->getResult();
+        return view('admin/criteria/npv/index', ["costs" => $costs, "benefits"=>$benefits]);
     }
 }

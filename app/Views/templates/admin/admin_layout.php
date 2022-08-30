@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this page -->
     <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css')?>" rel="stylesheet">
+    <script src="<?= base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
 
     <?= $this->renderSection('styles') ?>
 </head>
@@ -75,7 +76,6 @@
         </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <script src="<?= base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
     <script src="<?= base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url('assets/vendor/jquery-easing/jquery.easing.min.js') ?>"></script>

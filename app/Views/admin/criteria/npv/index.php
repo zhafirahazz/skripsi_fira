@@ -27,56 +27,85 @@
                 <div class="card">
                     <h5 class="d-inline align-middle m-3"><b>Form Perhitungan Net Present Value (NPV)</b></h5>
                     <div class="card-body">
-                    <form action="" method="POST">
-                                <div class="row g-3 align-items-center mb-3">
-                                    <div class="col-auto">
-                                        <label for="inputR" class="col-form-label">r</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <input type="number" id="inputR" class="form-control">
-                                    </div>
-                                    <div class="col-auto">
-                                        <label for="" class="col-form-label">%</label>
-                                    </div>
+                        <form action="" method="POST">
+                            <div class="row g-3 align-items-center mb-3">
+                                <div class="col-auto">
+                                    <label for="inputR" class="col-form-label">r</label>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label for="benefitInput" class="form-label">Manfaat tahun ke 0</label>
-                                            <input type="text" class="form-control" id="benefitInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="benefitInput" class="form-label">Manfaat tahun ke 1</label>
-                                            <input type="text" class="form-control" id="benefitInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="benefitInput" class="form-label">Manfaat tahun ke 2</label>
-                                            <input type="text" class="form-control" id="benefitInput" placeholder="0" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label for="costInput" class="form-label">Biaya tahun ke 0</label>
-                                            <input type="text" class="form-control" id="costInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="costInput" class="form-label">Biaya tahun ke 1</label>
-                                            <input type="text" class="form-control" id="costInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="costInput" class="form-label">Biaya tahun ke 2</label>
-                                            <input type="text" class="form-control" id="costInput" placeholder="0" disabled>
-                                        </div>
-                                    </div>
+                                <div class="col-auto">
+                                    <input type="number" value="5" id="inputR" class="form-control">
                                 </div>
-                                <a href="<?php echo route_to('bcr.hitung') ?>">
+                                <div class="col-auto">
+                                    <label for="" class="col-form-label">%</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <?php foreach ($benefits as $benefit) : ?>
+                                        <div class="mb-3">
+                                            <label for="benefitInput" class="form-label">Manfaat tahun ke <?= $benefit->name_benefit ?></label>
+                                            <input type="text" class="form-control" id="benefitInput" value="<?= $benefit->nominal ?>" disabled>
+                                        </div>
+                                    <?php endforeach ?>
+                                </div>
+                                <div class="col">
+                                    <?php foreach ($costs as $cost) : ?>
+
+                                        <div class="mb-3">
+                                            <label for="costInput" class="form-label">Biaya tahun ke <?= $cost->name_cost ?></label>
+                                            <input type="text" class="form-control" id="costInput" value="<?= $cost->price ?>" disabled>
+                                        </div>
+                                    <?php endforeach ?>
+
+                                </div>
+                            </div>
+                            <a href="<?php echo route_to('bcr.hitung') ?>">
                                 <button class="btn btn-outline-primary btn-sm">Hitung</button></a>
-                            </form>
+                        </form>
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-header">
+                        Kesimpulan
+                    </div>
+                    <div class="card-body">
+                        <p id="result"></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(() => {
+        calculateNPV()
+    })
+
+    function calculateNPV() {
+        let benefitsData = <?= json_encode($benefits) ?>;
+        let costsData = <?= json_encode($costs) ?>;
+
+        let rate = $('#inputR').val()
+
+        let length = benefitsData.length > costsData.length ? benefitsData.length : costsData.length;
+
+        let NPV = 0;
+        for (let i = 0; i < length; i++) {
+            let benefit = benefitsData[i] ? benefitsData[i] : null;
+            let cost = costsData[i] ? costsData[i] : null;
+            
+            tahun = benefit == null? Number.parseInt(cost.name_cost) : Number.parseInt(benefit.name_benefit)
+            benefit = benefit == null ? 0 : benefit.nominal
+            cost = cost == null ? 0 : cost.price
+            let temp = ((benefit - cost) / Math.pow((1 + (rate / 100)), tahun))
+            NPV = NPV + (Number.isNaN(temp)? 0 : temp)
+        }
+        let kelayakan = NPV > 0 ? 'DITERIMA' : 'TIDAK DITERIMA'
+
+        let message = `Nilai NPV adalah ${NPV} sehingga proyek ${kelayakan} untuk dilakukan`;
+        $('#result').text(message)
+    }
+</script>
 
 <?php $this->endSection() ?>

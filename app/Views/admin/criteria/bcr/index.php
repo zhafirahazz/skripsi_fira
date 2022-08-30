@@ -35,7 +35,7 @@ $this->extend('templates/admin/admin_layout') ?>
                                         <label for="inputR" class="col-form-label">r</label>
                                     </div>
                                     <div class="col-auto">
-                                        <input type="number" id="inputR" class="form-control">
+                                        <input type="number" value="5" id="inputR" class="form-control">
                                     </div>
                                     <div class="col-auto">
                                         <label for="" class="col-form-label">%</label>
@@ -43,37 +43,36 @@ $this->extend('templates/admin/admin_layout') ?>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <div class="mb-3">
-                                            <label for="benefitInput" class="form-label">Manfaat tahun ke 0</label>
-                                            <input type="text" class="form-control" id="benefitInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="benefitInput" class="form-label">Manfaat tahun ke 1</label>
-                                            <input type="text" class="form-control" id="benefitInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="benefitInput" class="form-label">Manfaat tahun ke 2</label>
-                                            <input type="text" class="form-control" id="benefitInput" placeholder="0" disabled>
-                                        </div>
+                                        <?php foreach ($benefits as $benefit) : ?>
+                                            <div class="mb-3">
+                                                <label for="benefitInput" class="form-label">Manfaat tahun ke <?= $benefit->name_benefit ?></label>
+                                                <input type="text" class="form-control" id="benefitInput" value="<?= $benefit->nominal ?>" disabled>
+                                            </div>
+                                        <?php endforeach ?>
                                     </div>
                                     <div class="col">
-                                        <div class="mb-3">
-                                            <label for="costInput" class="form-label">Biaya tahun ke 0</label>
-                                            <input type="text" class="form-control" id="costInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="costInput" class="form-label">Biaya tahun ke 1</label>
-                                            <input type="text" class="form-control" id="costInput" placeholder="0" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="costInput" class="form-label">Biaya tahun ke 2</label>
-                                            <input type="text" class="form-control" id="costInput" placeholder="0" disabled>
-                                        </div>
+                                        <?php foreach ($costs as $cost) : ?>
+
+                                            <div class="mb-3">
+                                                <label for="costInput" class="form-label">Biaya tahun ke <?= $cost->name_cost ?></label>
+                                                <input type="text" class="form-control" id="costInput" value="<?= $cost->price ?>" disabled>
+                                            </div>
+                                        <?php endforeach ?>
+
                                     </div>
                                 </div>
                                 <a href="<?php echo route_to('bcr.hitung') ?>">
-                                <button class="btn btn-outline-primary btn-sm">Hitung</button></a>
+                                    <button class="btn btn-outline-primary btn-sm">Hitung</button></a>
                             </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-2">
+                        <div class="card-header">
+                            Kesimpulan
+                        </div>
+                        <div class="card-body">
+                            <p id="result"></p>
                         </div>
                     </div>
                 </div>
@@ -81,4 +80,32 @@ $this->extend('templates/admin/admin_layout') ?>
         </div>
     </div>
 
+    <script>
+
+        $(document).ready(() => {
+            calculateBCR()
+        })
+
+        function calculateBCR() {
+            let benefitsData = <?= json_encode($benefits) ?>;
+            let costsData = <?= json_encode($costs) ?>;
+
+            let rate = $('#inputR').val()
+
+            let benefit = benefitsData.reduce((prev, curr) => {
+                return prev + (curr.nominal / Math.pow((1 + (rate / 100)),Number.parseInt(curr.name_benefit)))
+            }, 0)
+            
+            let cost = costsData.reduce((prev, curr, index) => {
+                return prev + (curr.price / Math.pow((1 + (rate / 100)),Number.parseInt(curr.name_cost)))
+            }, 0)
+
+            let BCR = benefit/cost;
+
+            let kelayakan = BCR < 1 ? 'TIDAK LAYAK' : 'LAYAK'
+
+            let message = `Nilai BCR adalah ${BCR} sehingga proyek ${kelayakan} untuk dilakukan`;
+            $('#result').text(message)
+        }
+    </script>
     <?php $this->endSection() ?>

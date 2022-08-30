@@ -185,7 +185,7 @@
 
     const costContext = document.getElementById('costChart').getContext('2d')
     const costChart = new Chart(costContext, {
-        type: "bar",
+        type: "line",
         data: {
             labels: <?= json_encode($cost_chart["label"]) ?>,
             datasets: [{
@@ -214,7 +214,7 @@
 
     const benefitContext = document.getElementById('benefitChart').getContext('2d')
     const benefitChart = new Chart(benefitContext, {
-        type: "bar",
+        type: "line",
         data: {
             labels: <?= json_encode($benefit_chart["label"]) ?>,
             datasets: [{

@@ -46,7 +46,7 @@ class DashboardController extends BaseController
 
         $benefit_statistics = $db->query("SELECT SUM(A.quantity * A.unit_price) as total, B.category_display FROM benefit as A JOIN category as B ON A.category_id = B.id GROUP BY A.category_id;")->getResult();
 
-        $cost_value_statistics = $db->query("SELECT * FROM cost_value")->getResult();
+        $cost_value_statistics = $db->query("SELECT * FROM cost_value ORDER BY name_cost")->getResult();
         $cost_chart = [
             "label"=>array_map(function($e){
                 return $e->name_cost;
@@ -56,7 +56,7 @@ class DashboardController extends BaseController
             }, $cost_value_statistics)
         ];
 
-        $benefit_value_statistics = $db->query("SELECT * FROM benefit_value")->getResult();
+        $benefit_value_statistics = $db->query("SELECT * FROM benefit_value ORDER BY name_benefit")->getResult();
         $benefit_chart = [
             "label"=>array_map(function($e){
                 return $e->name_benefit;
