@@ -27,10 +27,24 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Silakan dipilih sesuai arus kas pertahunnya</h5>
-                        <br>
-                        <a href=""><button type="button" class="btn btn-primary">Arus kas pertahun sama</button></a>
-                        <a href=""><button type="button" class="btn btn-secondary">Arus kas pertahun berbeda</button></a>
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Tahun</th>
+                                <th>Cost</th>
+                                <th>Benefit</th>
+                                <th>Cash Flow</th>
+                            </thead>
+                            <tbody>
+                                <?php for ($i = 0; $i < $length; $i++) : ?>
+                                    <tr>
+                                        <td><?php echo $costs[$i]->name_cost; ?></td>
+                                        <td><?php echo $costs[$i]->price; ?></td>
+                                        <td><?php echo $benefits[$i]->nominal; ?></td>
+                                        <td><?php echo($benefits[$i]->nominal - $costs[$i]->price) ?></td>
+                                    </tr>
+                                <?php endfor; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -25,9 +25,28 @@
         <div class="row mt-4">
             <div class="col">
                 <div class="card">
-                    <h5 class="d-inline align-middle m-3"><b>Form Perhitungan Internal Rate of Return (IRR)</b></h5>
+                    <div class="card-header">
+                        <h2>NPV = <?= $npv ?> - WITH IRR OF <?= $irr?>%</h2>
+                    </div>
                     <div class="card-body">
-                        FORM WKWK
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Tahun</th>
+                                <th>Cost</th>
+                                <th>Benefit</th>
+                                <th>Cash Flow</th>
+                            </thead>
+                            <tbody>
+                                <?php for ($i = 0; $i < $length; $i++) : ?>
+                                    <tr>
+                                        <td><?php echo $costs[$i]->name_cost; ?></td>
+                                        <td><?php echo $costs[$i]->price; ?></td>
+                                        <td><?php echo $benefits[$i]->nominal; ?></td>
+                                        <td><?php echo($benefits[$i]->nominal - $costs[$i]->price) ?></td>
+                                    </tr>
+                                <?php endfor; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
