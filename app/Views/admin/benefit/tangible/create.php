@@ -9,10 +9,10 @@
             <div class="card">
                 <div class="card-body">
                     <form action="<?php echo route_to('tangible.store') ?>" method="post">
-                    <input class="form-control mt-4" placeholder="Manfaat Baru" type="text" name="benefit">
-                    <input class="form-control mt-4" placeholder="Kuantitas" type="number" name="quantity">
+                    <input class="form-control mt-4" placeholder="Manfaat Baru" type="text" name="benefit" required>
+                    <input class="form-control mt-4" placeholder="Kuantitas" type="number" name="quantity" required >
                     <label class="mt-4" for="class">Pilih Satuan</label>
-                    <select class="form-control" name="unit_id">
+                    <select class="form-control" name="unit_id"required>
                         <option value="1">buah</option>
                         <option value="2">orang</option>
                         <option value="3">jam</option>
@@ -26,8 +26,8 @@
                         <option value="11">kelas</option>
                         <option value="12">buku</option>
                     </select>
-                    <input class="form-control mt-4" placeholder="Harga Satuan" type="number" name="unit_price">
-                    <textarea class="form-control mt-4" placeholder="Keterangan" name="description"></textarea>
+                    <input class="form-control mt-4" placeholder="Harga Satuan" type="number" name="unit_price" required>
+                    <textarea class="form-control mt-4" placeholder="Keterangan" name="description" required></textarea>
                     <div class="text-end mt-4">
                         <button type="submit" class="btn btn-outline-primary">Simpan</button>
                     </div>

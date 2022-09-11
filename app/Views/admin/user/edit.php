@@ -30,16 +30,16 @@
             <div class="card">
                 <div class="card-body">
                     <form action="<?php echo route_to('user.update', $user["id"]) ?>" method="post">
-                        <input class="form-control mt-4" placeholder="Nama Pengguna Baru" type="text" name="name" value="<?php echo ($user["name"]) ?>" />
-                        <input class="form-control mt-4" placeholder="Email Pengguna Baru" type="email" name="email" value="<?php echo ($user["email"]) ?>" />
+                        <input required class="form-control mt-4" placeholder="Nama Pengguna Baru" type="text" name="name" value="<?php echo ($user["name"]) ?>" />
+                        <input required class="form-control mt-4" placeholder="Email Pengguna Baru" type="email" name="email" value="<?php echo ($user["email"]) ?>" />
                         <label class="mt-4" for="role">Pilih Level Pengguna</label>
-                        <select class="form-control" name="role" selected="<?php echo ($user["role_id"]) ?>">
+                        <select class="form-control" name="role" selected="<?php echo ($user["role_id"]) ?>" required>
                             <option value="1">Super Admin</option>
                             <option value="2">Admin</option>
                             <option value="3">Kepala Sekolah</option>
                         </select>
-                        <input class="form-control mt-4" placeholder="Password Baru" type="password" name="new_password">
-                        <input class="form-control mt-4" placeholder="Konfirmasi Password Baru" type="password" name="c_password">
+                        <input required class="form-control mt-4" placeholder="Password Baru" type="password" name="new_password">
+                        <input required class="form-control mt-4" placeholder="Konfirmasi Password Baru" type="password" name="c_password">
                         <div class="text-end mt-4">
                             <button type="submit" class="btn btn-outline-primary">Simpan</button>
                         </div>

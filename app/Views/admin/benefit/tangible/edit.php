@@ -8,17 +8,17 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <form action="<?php echo route_to('tangible.update', $item["id"]) ?>" method="post">
-                        <input class="form-control mt-4" value="<?= $item['benefit'] ?>" type="text" name="benefit">
-                        <input class="form-control mt-4" value="<?= $item['quantity'] ?>" type="number" name="quantity">
+                    <form action="<?php echo route_to('tangible.update', $item["id"]) ?>" method="post" >
+                        <input class="form-control mt-4" value="<?= $item['benefit'] ?>" type="text" name="benefit" required>
+                        <input class="form-control mt-4" value="<?= $item['quantity'] ?>" type="number" name="quantity" required >
                         <label class="mt-4" for="class">Pilih Satuan</label>
-                        <select class="form-control" name="unit_id">
+                        <select class="form-control" name="unit_id" required>
                             <?php foreach ($units as $unit) : ?>
                                 <option value="<?= $unit["id"] ?>" <?= $unit["id"] == $item["unit_id"] ? "selected" : ""; ?>><?= $unit["unit_name"] ?></option>
                             <?php endforeach ?>
                         </select>
-                        <input class="form-control mt-4" value="<?= $item['unit_price'] ?>" type="number" name="unit_price">
-                        <textarea class="form-control mt-4" name="description"><?= $item['description'] ?></textarea>
+                        <input class="form-control mt-4" value="<?= $item['unit_price'] ?>" type="number" name="unit_price" required>
+                        <textarea class="form-control mt-4" name="description" required><?= $item['description'] ?></textarea>
                         <div class="text-end mt-4">
                             <button type="submit" class="btn btn-outline-primary">Simpan</button>
                         </div>

@@ -14,7 +14,7 @@
                                 <label for="inputName" class="col-form-label"><b>Name</b></label>
                             </div>
                             <div class="col-md-8">
-                                <input class="form-control" id="inputName" value="<?= $profile['name'] ?>" type="text" name="name">
+                                <input class="form-control" id="inputName" value="<?= $profile['name'] ?>" type="text" name="name" required>
                             </div>
                         </div>
                         <div class="row mt-4 g-3 align-items-center">
@@ -22,7 +22,7 @@
                                 <label for="inputEmail" class="col-form-label"><b>Email</b></label>
                             </div>
                             <div class="col-md-8">
-                                <input class="form-control" id="inputEmail" value="<?= $profile['email'] ?>" type="email" name="email">
+                                <input class="form-control" id="inputEmail" value="<?= $profile['email'] ?>" type="email" name="email" required>
                             </div>
                         </div>
                         <div class="row mt-4 g-3 align-items-center">
@@ -30,7 +30,7 @@
                                 <label class="mt-3" for="role"><b>Pilih Role</b></label>
                             </div>
                             <div class="col-auto">
-                                <select class="form-control" name="role_id">
+                                <select class="form-control" name="role_id" required>
                                     <?php foreach ($roles as $role) : ?>
                                         <option value="<?= $role["id"] ?>" <?= $role["id"] == $profile["role_id"] ? "selected" : ""; ?>><?= $role["role_display"] ?></option>
                                     <?php endforeach ?>
@@ -48,13 +48,13 @@
             <div class="card">
                 <button type="button" class="btn btn-primary" disabled>Ganti Password</button>
                 <div class="card-body">
-                    <form  action="<?php echo route_to('profile.update.pwd', $profile["id"]) ?>" method="post">
+                    <form action="<?php echo route_to('profile.update.pwd', $profile["id"]) ?>" method="post">
                         <div class="row mt-4 g-3 align-items-center">
                             <div class="col-md-5">
                                 <label for="inputPasswordLama" class="col-form-label"><b>Password Lama</b></label>
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" id="inputPasswordLama" type="password" name="password">
+                                <input class="form-control" id="inputPasswordLama" type="password" name="password" required>
                             </div>
                         </div>
                         <div class="row mt-4 g-3 align-items-center">
@@ -62,7 +62,7 @@
                                 <label for="inputPasswordBaru" class="col-form-label"><b>Password Baru</b></label>
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" id="inputPasswordBaru" type="password" name="new_password">
+                                <input class="form-control" id="inputPasswordBaru" type="password" name="new_password" required>
                             </div>
                         </div>
                         <div class="row mt-4 g-3 align-items-center">
@@ -70,7 +70,7 @@
                                 <label for="inputKonfirmasiPassword" class="col-form-label"><b>Konfirmasi Password</b></label>
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" id="inputKonfirmasiPassword" type="password" name="c_password">
+                                <input class="form-control" id="inputKonfirmasiPassword" type="password" name="c_password" required>
                             </div>
                         </div>
                         <div class="text-end mt-4">

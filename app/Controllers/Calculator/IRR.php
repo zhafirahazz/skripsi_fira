@@ -38,7 +38,7 @@ class IRR extends BaseController
         }
 
         $irr = $this->IRR($cashflows);
-        $npv = Calculator::NPV($cashflows, 50.4750);
+        $npv = Calculator::NPV($cashflows, $irr);
         return view('admin/criteria/irr/index', ["costs" => $costs, "benefits" => $benefits, "length" => $length, "npv" => $npv, "irr"=>$irr]);
     }
 

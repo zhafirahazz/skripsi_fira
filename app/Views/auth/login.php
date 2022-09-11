@@ -10,8 +10,8 @@
                 <small class="text-danger"><?php echo($_SESSION['error']) ?></small>
             <?php endif ?>
 
-            <input class="form form-control" placeholder="email" name="email" type="email">
-            <input class="form mt-3 form-control" placeholder="password" name="password" type="password">
+            <input required class="form form-control" placeholder="email" name="email" type="email">
+            <input required class="form mt-3 form-control" placeholder="password" name="password" type="password">
             <button class="btn mt-4 btn-primary w-100">Login</button>
         </form>
     </div>

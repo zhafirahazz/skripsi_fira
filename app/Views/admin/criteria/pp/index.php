@@ -49,6 +49,16 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-body">
+                <p>n = <?= $n ?></p>
+                <p>a = <?= $a ?></p>
+                <p>b = <?= $b ?></p>
+                <p>c = <?= $c ?></p>
+                <p>pp = <?= $pp ?></p>
+                <p>nIndex = <?= $nIndex ?></p>
+            </div>
+        </div>
     </div>
 </div>
 

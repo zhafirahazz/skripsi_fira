@@ -9,8 +9,8 @@
             <div class="card">
                 <div class="card-body">
                     <form action="<?php echo route_to('benefit_value.store') ?>" method="post">
-                    <input class="form-control mt-4" placeholder="Nilai Manfaat Baru" type="text" name="name">
-                    <input class="form-control mt-4" placeholder="Nominal Nilai Manfaat" type="text" name="nominal">
+                    <input class="form-control mt-4" placeholder="Nilai Manfaat Baru" type="number" name="name">
+                    <input class="form-control mt-4" placeholder="Nominal Nilai Manfaat" type="number" name="nominal">
                     <div class="text-end mt-4">
                         <button type="submit" class="btn btn-outline-primary">Simpan</button>
                     </div>
