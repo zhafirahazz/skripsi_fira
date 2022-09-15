@@ -172,21 +172,24 @@ $routes->group('admin', ['filter' => 'auth-filter'], static function ($route) {
     $route->group('criteria', static function ($criteriaRoute) {
         $criteriaRoute->group('npv', static function ($npvRoute) {
             $npvRoute->get('', 'Calculator\NPV::index', ["as" => "npv.index"]);
-            //$npvRoute->get('', 'Calculator\NPV::output', ["as" => "npv.output"]);
+            $npvRoute->get('output', 'Calculator\NPV::output', ["as" => "npv.output"]);
         });
         $criteriaRoute->group('bcr', static function ($bcrRoute) {
             $bcrRoute->get('', 'Calculator\BCR::index', ["as" => "bcr.index"]);
             //$bcrRoute->post('', 'Calculator\BCR::hitung', ["as" => "bcr.hitung"]);
-            //$bcrRoute->get('', 'Calculator\BCR::output', ["as" => "bcr.output"]);
+            $bcrRoute->get('output', 'Calculator\BCR::output', ["as" => "bcr.output"]);
         });
         $criteriaRoute->group('irr', static function ($irrRoute) {
             $irrRoute->get('', 'Calculator\IRR::index', ["as" => "irr.index"]);
+            $irrRoute->get('output', 'Calculator\IRR::output', ["as" => "irr.output"]);
         });
         $criteriaRoute->group('pp', static function ($ppRoute) {
             $ppRoute->get('', 'Calculator\PP::index', ["as" => "pp.index"]);
+            $ppRoute->get('output', 'Calculator\PP::output', ["as" => "pp.output"]);
         });
         $criteriaRoute->group('roi', static function ($roiRoute) {
             $roiRoute->get('', 'Calculator\ROI::index', ["as" => "roi.index"]);
+            $roiRoute->get('output', 'Calculator\ROI::output', ["as" => "roi.output"]);
             //$roiRoute->get('', 'Calculator\ROI::output', ["as" => "roi.output"]);
         });
     });

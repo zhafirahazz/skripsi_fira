@@ -19,56 +19,24 @@
                     <div class="card">
                         <h5 class="d-inline align-middle m-3"><b>Form Perhitungan Return on Investment (ROI)</b></h5>
                         <div class="card-body">
-                            <form action="" method="POST">
+                            <div>
                                 <div class="mb-3">
                                     <label for="biayaAwalInput" class="form-label">Biaya Investasi</label>
-                                    <input type="text" class="form-control" id="biayaAwalInput"
-                                    value="<?= $costs == null? 0 : $costs->price ?>"
-                                    placeholder="0" disabled>
+                                    <input type="text" class="form-control" id="biayaAwalInput" value="<?= $costs == null ? 0 : $costs->price ?>" placeholder="0" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label for="profitInput" class="form-label">Keuntungan Investasi</label>
-                                    <input type="text" class="form-control" id="profitInput" placeholder="0"
-                                    value="<?= (($benefits == null ? 0 : $benefits->nominal)-($costs == null? 0 : $costs->price)) ?>"
-                                    disabled>
+                                    <input type="text" class="form-control" id="profitInput" placeholder="0" value="<?= (($benefits == null ? 0 : $benefits->nominal) - ($costs == null ? 0 : $costs->price)) ?>" disabled>
                                 </div>
-                                <a href="">
+                                <a href="<?php echo route_to('roi.output') ?>">
                                     <button class="btn btn-outline-primary btn-sm">Hitung</button></a>
-                            </form>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="card mt-2">
-                    <div class="card-header">
-                        Kesimpulan
-                    </div>
-                    <div class="card-body">
-                        <p id="result"></p>
-                    </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        $(document).ready(()=>{
-            calculateRoi()
-        })
 
-        function calculateRoi(){
-            let benefit = $('#profitInput').val()
-            let cost = $('#biayaAwalInput').val()
-
-            console.log(`${benefit} / ${cost}`)
-
-            let roi = (benefit/cost) * 100
-
-            let kesimpulan = roi > 0 ? 'DITERIMA' : 'TIDAK DITERIMA'
-
-            let msg = `Nilai ROI adalah ${roi} % sehingga proyek dinyatakan ${kesimpulan}`
-            $('#result').text(msg)
-        }
-    </script>
-
-    <?php $this->endSection() ?>
+<?php $this->endSection() ?>

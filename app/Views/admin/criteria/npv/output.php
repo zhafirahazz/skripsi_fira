@@ -30,11 +30,11 @@
                         <form action="" method="post">
                         <div class="mb-3">
                                 <label for="npv" class="form-label">NPV</label>
-                                <input type="text" class="form-control" id="npv" placeholder="0" disabled>
+                                <input type="text" class="form-control" id="npv" placeholder="0" value="<?= $npv ?>" disabled>
                             </div>
                             <div class="mb-3">
                                 <label for="kesimpulan" class="form-label">Kesimpulan</label>
-                                <input type="text" class="form-control" id="kesimpulan" placeholder="text" disabled>
+                                <input type="text" class="form-control" id="kesimpulan" placeholder="text" value="<?= $message ?>" disabled>
                             </div>
                         </form>
                     </div>

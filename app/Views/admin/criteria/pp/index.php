@@ -26,7 +26,24 @@
         <div class="row mt-4">
             <div class="col">
                 <div class="card">
+                    <div class="card-header">
+                        <h4><strong>Form perhitungan Payback Period</strong></h4>
+                    </div>
+
+
+
                     <div class="card-body">
+                        <div class="row g-3 align-items-center mb-3">
+                            <div class="col-auto">
+                                <label for="inputUsiaProyek" class="col-form-label">Usia Proyek</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" value="5" id="inputUsiaProyek" class="form-control">
+                            </div>
+                            <div class="col-auto">
+                                <label for="" class="col-form-label">Tahun</label>
+                            </div>
+                        </div>
                         <table class="table table-striped">
                             <thead>
                                 <th>Tahun</th>
@@ -40,26 +57,34 @@
                                         <td><?php echo $costs[$i]->name_cost; ?></td>
                                         <td><?php echo $costs[$i]->price; ?></td>
                                         <td><?php echo $benefits[$i]->nominal; ?></td>
-                                        <td><?php echo($benefits[$i]->nominal - $costs[$i]->price) ?></td>
+                                        <td><?php echo ($benefits[$i]->nominal - $costs[$i]->price) ?></td>
                                     </tr>
                                 <?php endfor; ?>
                             </tbody>
                         </table>
+
+                        <a id="ppCalculator">
+                            <button class="btn btn-outline-primary btn-sm">Hitung</button></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <p>n = <?= $n ?></p>
-                <p>a = <?= $a ?></p>
-                <p>b = <?= $b ?></p>
-                <p>c = <?= $c ?></p>
-                <p>pp = <?= $pp ?></p>
-                <p>nIndex = <?= $nIndex ?></p>
-            </div>
-        </div>
+
     </div>
 </div>
 
+<script>
+    $(document).ready(() => {
+        setAction($('#inputUsiaProyek').val())
+        $('#inputUsiaProyek').on('input', (event) => {
+            setAction($('#inputUsiaProyek').val())
+        })
+    })
+
+    function setAction(r) {
+        const BASE_URL = "<?php echo route_to('pp.output') ?>"
+        let url = `${BASE_URL}?u=${r}`
+        $('#ppCalculator').attr("href", url)
+    }
+</script>
 <?php $this->endSection() ?>

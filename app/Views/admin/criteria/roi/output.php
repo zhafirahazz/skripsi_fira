@@ -23,11 +23,11 @@
                     <form action="" method="post">
                         <div class="mb-3">
                                 <label for="roi" class="form-label">ROI</label>
-                                <input type="text" class="form-control" id="roi" placeholder="0" disabled>
+                                <input type="text" class="form-control" id="roi" placeholder="0" disabled value="<?= $roi?>">
                             </div>
                             <div class="mb-3">
                                 <label for="kesimpulan" class="form-label">Kesimpulan</label>
-                                <input type="text" class="form-control" id="kesimpulan" placeholder="text" disabled>
+                                <input type="text" class="form-control" id="kesimpulan" placeholder="text"  value="<?= $message?>" disabled>
                             </div>
                         </form>
                     </div>

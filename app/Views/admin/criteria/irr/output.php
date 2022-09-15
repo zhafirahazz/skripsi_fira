@@ -30,11 +30,11 @@
                         <form action="" method="post">
                             <div class="mb-3">
                                 <label for="irr" class="form-label">IRR</label>
-                                <input type="text" class="form-control" id="irr" placeholder="0" disabled>
+                                <input type="text" class="form-control" value="<?= $irr ?>" id="irr" placeholder="0" disabled>
                             </div>
                             <div class="mb-3">
                                 <label for="kesimpulan" class="form-label">Kesimpulan</label>
-                                <input type="text" class="form-control" id="kesimpulan" placeholder="text" disabled>
+                                <input type="text" class="form-control" value="<?= $message ?>" id="kesimpulan" placeholder="text" disabled>
                             </div>
                         </form>
                     </div>

@@ -29,7 +29,7 @@ $this->extend('templates/admin/admin_layout') ?>
                     <div class="card">
                         <h5 class="d-inline align-middle m-3"><b>Form Perhitungan Benefit/ Cost Ratio (BCR)</b></h5>
                         <div class="card-body">
-                            <form action="" method="POST">
+                            <div>
                                 <div class="row g-3 align-items-center mb-3">
                                     <div class="col-auto">
                                         <label for="inputR" class="col-form-label">r</label>
@@ -61,18 +61,9 @@ $this->extend('templates/admin/admin_layout') ?>
 
                                     </div>
                                 </div>
-                                <a href="<?php echo route_to('bcr.hitung') ?>">
+                                <a id="bcrCalculator">
                                     <button class="btn btn-outline-primary btn-sm">Hitung</button></a>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="card mt-2">
-                        <div class="card-header">
-                            Kesimpulan
-                        </div>
-                        <div class="card-body">
-                            <p id="result"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -81,31 +72,18 @@ $this->extend('templates/admin/admin_layout') ?>
     </div>
 
     <script>
-
         $(document).ready(() => {
-            calculateBCR()
+            setAction($('#inputR').val())
+            $('#inputR').on('input',(event) => {
+                setAction($('#inputR').val())
+            })
         })
 
-        function calculateBCR() {
-            let benefitsData = <?= json_encode($benefits) ?>;
-            let costsData = <?= json_encode($costs) ?>;
-
-            let rate = $('#inputR').val()
-
-            let benefit = benefitsData.reduce((prev, curr) => {
-                return prev + (curr.nominal / Math.pow((1 + (rate / 100)),Number.parseInt(curr.name_benefit)))
-            }, 0)
-            
-            let cost = costsData.reduce((prev, curr, index) => {
-                return prev + (curr.price / Math.pow((1 + (rate / 100)),Number.parseInt(curr.name_cost)))
-            }, 0)
-
-            let BCR = benefit/cost;
-
-            let kelayakan = BCR < 1 ? 'TIDAK LAYAK' : 'LAYAK'
-
-            let message = `Nilai BCR adalah ${BCR} sehingga proyek ${kelayakan} untuk dilakukan`;
-            $('#result').text(message)
+        function setAction(r) {
+            const BASE_URL = "<?php echo route_to('bcr.output') ?>"
+            let url = `${BASE_URL}?r=${r}`
+            console.log(url)
+            $('#bcrCalculator').attr("href", url)
         }
     </script>
     <?php $this->endSection() ?>

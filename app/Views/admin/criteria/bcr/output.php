@@ -28,11 +28,11 @@
                             <form action="" method="post">
                             <div class="mb-3">
                                 <label for="bcr" class="form-label">BCR</label>
-                                <input type="text" class="form-control" id="bcr" placeholder="0" disabled>
+                                <input type="text" class="form-control" id="bcr" placeholder="0" disabled value="<?= $bcr?>">
                             </div>
                             <div class="mb-3">
                                 <label for="kesimpulan" class="form-label">Kesimpulan</label>
-                                <input type="text" class="form-control" id="kesimpulan" placeholder="text" disabled>
+                                <input type="text" class="form-control" id="kesimpulan" value="<?= $message ?>" placeholder="text" disabled>
                             </div>
                             </form>
                         </div>

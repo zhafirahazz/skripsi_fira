@@ -27,7 +27,7 @@
                 <div class="card">
                     <h5 class="d-inline align-middle m-3"><b>Form Perhitungan Net Present Value (NPV)</b></h5>
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <div >
                             <div class="row g-3 align-items-center mb-3">
                                 <div class="col-auto">
                                     <label for="inputR" class="col-form-label">r</label>
@@ -59,17 +59,9 @@
 
                                 </div>
                             </div>
-                            <a href="<?php echo route_to('bcr.hitung') ?>">
+                            <a id="npvCalculator">
                                 <button class="btn btn-outline-primary btn-sm">Hitung</button></a>
-                        </form>
-                    </div>
-                </div>
-                <div class="card mt-2">
-                    <div class="card-header">
-                        Kesimpulan
-                    </div>
-                    <div class="card-body">
-                        <p id="result"></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,33 +71,17 @@
 
 <script>
     $(document).ready(() => {
-        calculateNPV()
-    })
+            setAction($('#inputR').val())
+            $('#inputR').on('input',(event) => {
+                setAction($('#inputR').val())
+            })
+        })
 
-    function calculateNPV() {
-        let benefitsData = <?= json_encode($benefits) ?>;
-        let costsData = <?= json_encode($costs) ?>;
-
-        let rate = $('#inputR').val()
-
-        let length = benefitsData.length > costsData.length ? benefitsData.length : costsData.length;
-
-        let NPV = 0;
-        for (let i = 0; i < length; i++) {
-            let benefit = benefitsData[i] ? benefitsData[i] : null;
-            let cost = costsData[i] ? costsData[i] : null;
-            
-            tahun = benefit == null? Number.parseInt(cost.name_cost) : Number.parseInt(benefit.name_benefit)
-            benefit = benefit == null ? 0 : benefit.nominal
-            cost = cost == null ? 0 : cost.price
-            let temp = ((benefit - cost) / Math.pow((1 + (rate / 100)), tahun))
-            NPV = NPV + (Number.isNaN(temp)? 0 : temp)
+        function setAction(r) {
+            const BASE_URL = "<?php echo route_to('npv.output') ?>"
+            let url = `${BASE_URL}?r=${r}`
+            $('#npvCalculator').attr("href", url)
         }
-        let kelayakan = NPV > 0 ? 'DITERIMA' : 'TIDAK DITERIMA'
-
-        let message = `Nilai NPV adalah ${NPV} sehingga proyek ${kelayakan} untuk dilakukan`;
-        $('#result').text(message)
-    }
 </script>
 
 <?php $this->endSection() ?>

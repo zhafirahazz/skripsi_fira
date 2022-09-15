@@ -26,9 +26,25 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h2>NPV = <?= $npv ?> - WITH IRR OF <?= $irr?>%</h2>
+                        <h4><strong>Form perhitungan IRR</strong></h4>
                     </div>
                     <div class="card-body">
+
+                        <div>
+                            <div class="form-group row">
+                                <div class="col align-bottom">
+                                    <label class="align-bottom" for="rr">Tingkat Pengembalian</label>
+                                </div>
+                                <div class="col align-bottom">
+                                    <input class="form-control align-bottom" type="number" name="rr" id="rr">
+                                </div>
+                                <div class="col align-bottom">
+                                    <span class="align-bottom">%</span>
+                                </div>
+                                <div class="col-6"></div>
+                            </div>
+                        </div>
+
                         <table class="table table-striped">
                             <thead>
                                 <th>Tahun</th>
@@ -42,11 +58,16 @@
                                         <td><?php echo $costs[$i]->name_cost; ?></td>
                                         <td><?php echo $costs[$i]->price; ?></td>
                                         <td><?php echo $benefits[$i]->nominal; ?></td>
-                                        <td><?php echo($benefits[$i]->nominal - $costs[$i]->price) ?></td>
+                                        <td><?php echo ($benefits[$i]->nominal - $costs[$i]->price) ?></td>
                                     </tr>
                                 <?php endfor; ?>
                             </tbody>
                         </table>
+                        <div class="mt-2 text-right">
+                            <a id="irrCalculator">
+                                <button class="btn btn-primary">Hitung</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -54,4 +75,20 @@
     </div>
 </div>
 
+
+<script>
+    $(document).ready(() => {
+        setAction($('#rr').val())
+        $('#rr').on('input', (event) => {
+            setAction($('#rr').val())
+        })
+    })
+
+    function setAction(r) {
+        const BASE_URL = "<?php echo route_to('irr.output') ?>"
+        let url = `${BASE_URL}?r=${r}`
+        console.log(url)
+        $('#irrCalculator').attr("href", url)
+    }
+</script>
 <?php $this->endSection() ?>
