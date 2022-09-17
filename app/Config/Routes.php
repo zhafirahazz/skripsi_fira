@@ -36,10 +36,19 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+$routes->post('/email', 'Misc\EmailController::send');
+
 $routes->group('auth', static function ($route) {
     $route->get('login', 'Auth\LoginController::index', ["as" => "login"]);
     $route->post('login', 'Auth\LoginController::login', ["as" => "do.login"]);
     $route->get('logout', 'Auth\LoginController::logout', ["as" => "logout"]);
+    $route->get('forgot-password', 'Auth\ForgotPasswordController::index', ["as" => "auth.forgot.index"]);
+    $route->get('reset-password/(:any)', 'Auth\ForgotPasswordController::reset/$1', ["as" => "auth.forgot.reset"]);
+});
+
+$routes->group('api', static function ($route){
+    $route->post('auth/forgot-password', 'Auth\ForgotPasswordController::send', ["as"=> "auth.forgot.send"]);
+    $route->post('auth/update-password', 'Auth\ForgotPasswordController::update', ["as"=> "auth.forgot.update"]);
 });
 
 $routes->group('admin', ['filter' => 'auth-filter'], static function ($route) {

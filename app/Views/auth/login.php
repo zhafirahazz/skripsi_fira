@@ -12,6 +12,9 @@
 
             <input required class="form form-control" placeholder="email" name="email" type="email">
             <input required class="form mt-3 form-control" placeholder="password" name="password" type="password">
+            <div class="text-end">
+                <a href="<?php echo route_to('auth.forgot.index') ?>">Lupa password?</a>
+            </div>
             <button class="btn mt-4 btn-primary w-100">Login</button>
         </form>
     </div>

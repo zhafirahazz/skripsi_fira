@@ -9,12 +9,12 @@ class Email extends BaseConfig
     /**
      * @var string
      */
-    public $fromEmail;
+    public $fromEmail = 'no-reply@itabubakar.sch.id';
 
     /**
      * @var string
      */
-    public $fromName;
+    public $fromName = 'SMA IT ABU BAKAR BOARDING SCHOOL KULON PROGO';
 
     /**
      * @var string
@@ -33,7 +33,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $protocol = 'mail';
+    public $protocol = 'smtp';
 
     /**
      * The server path to Sendmail.
@@ -47,35 +47,39 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost;
+    // TODO: CHANGE
+    public $SMTPHost = 'smtp-relay.sendinblue.com';
 
     /**
      * SMTP Username
      *
      * @var string
      */
-    public $SMTPUser;
+    // TODO: CHANGE
+    public $SMTPUser = '';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass;
+    // TODO: CHANGE
+    public $SMTPPass = '';
 
     /**
      * SMTP Port
      *
      * @var int
      */
-    public $SMTPPort = 25;
+    // TODO: CHANGE IF NEEDED
+    public $SMTPPort = 587;
 
     /**
      * SMTP Timeout (in seconds)
      *
      * @var int
      */
-    public $SMTPTimeout = 5;
+    public $SMTPTimeout = 60;
 
     /**
      * Enable persistent SMTP connections
@@ -89,6 +93,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
+    // TODO: CHANGE IF NEEDED
     public $SMTPCrypto = 'tls';
 
     /**
@@ -110,7 +115,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $mailType = 'text';
+    public $mailType = 'html';
 
     /**
      * Character set (utf-8, iso-8859-1, etc.)
