@@ -33,7 +33,7 @@
                                     <label for="inputR" class="col-form-label">r</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="number" value="5" id="inputR" class="form-control">
+                                    <input type="number" value="<?= $r ?>" id="inputR" class="form-control">
                                 </div>
                                 <div class="col-auto">
                                     <label for="" class="col-form-label">%</label>

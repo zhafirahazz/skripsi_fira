@@ -38,7 +38,7 @@
                                 <label for="inputUsiaProyek" class="col-form-label">Usia Proyek</label>
                             </div>
                             <div class="col-auto">
-                                <input type="number" value="5" id="inputUsiaProyek" class="form-control">
+                                <input type="number" value="<?= $pa ?>" id="inputUsiaProyek" class="form-control">
                             </div>
                             <div class="col-auto">
                                 <label for="" class="col-form-label">Tahun</label>

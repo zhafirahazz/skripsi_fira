@@ -63,6 +63,11 @@ $routes->group('admin', ['filter' => 'auth-filter'], static function ($route) {
         $profileRoute->post('(:num)/edit', 'Management\ProfileController::update/$1', ["as" => "profile.update"]);
         $profileRoute->post('(:num)/update', 'Management\ProfileController::updatePassword/$1', ["as" => "profile.update.pwd"]);
     });
+
+    $route->group('report', static function($router){
+        $router->get('', 'Report\ReportController::index', ["as"=>"report.index"]);
+    });
+
     $route->group('user', static function ($userRoute) {
         $userRoute->get('', 'Management\UserController::index', ["as" => "user.index"]);
         $userRoute->get('new', 'Management\UserController::create', ["as" => "user.create"]);

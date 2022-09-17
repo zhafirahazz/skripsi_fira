@@ -36,7 +36,7 @@
                                     <label class="align-bottom" for="rr">Tingkat Pengembalian</label>
                                 </div>
                                 <div class="col align-bottom">
-                                    <input class="form-control align-bottom" type="number" name="rr" id="rr">
+                                    <input class="form-control align-bottom" value="<?= $rr ?>" type="number" name="rr" id="rr">
                                 </div>
                                 <div class="col align-bottom">
                                     <span class="align-bottom">%</span>

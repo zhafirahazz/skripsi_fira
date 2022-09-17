@@ -134,7 +134,7 @@
     </div>
     <!-- Nav Item - Tables Users -->
     <li class="nav-item">
-        <a class="nav-link" href="<?php echo route_to('user.index') ?>">
+        <a class="nav-link" href="<?php echo route_to('report.index') ?>">
             <i class="fas fa-fw fa-file"></i>
             <span>Report</span></a>
     </li>

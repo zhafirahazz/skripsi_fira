@@ -9,17 +9,55 @@
     <meta name="author" content="">
     <title><?php echo (isset($title)) ? $title : "PERHITUNGAN INVESTASI";  ?></title>
     <!-- Custom fonts for this template -->
-    <link href="<?= base_url('assets/vendor/fontawesome-free/css/all.min.css')?>" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('assets/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom styles for this template -->
-    <link href="<?= base_url('assets/css/sb-admin-2.min.css')?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css')?>" rel="stylesheet">
+    <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
     <script src="<?= base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
 
     <?= $this->renderSection('styles') ?>
+    <style>
+        .print, #print-area{
+            font-family: 'Arial';
+            color: #000;
+        }
+
+        .divider {
+            margin-top: 1px;
+            margin-bottom: 0;
+        }
+
+        td {
+            padding: 0px 5px;
+        }
+
+        thead {
+            background-color: #efefef;
+        }
+
+        .row-gray {
+            background-color: #f5f5f5;
+        }
+
+        .divider {
+            margin-top: 1px;
+            margin-bottom: 0;
+        }
+
+        #print-area{
+            display: none;
+        }
+
+        @media print {
+            #print-area{
+                display: block;
+            }
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -82,12 +120,14 @@
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('assets/js/sb-admin-2.min.js') ?>"></script>
     <!-- Page level plugins -->
-    <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js')?>"></script>
-    <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js')?>"></script>
+    <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
+    <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
     <!-- Page level custom scripts -->
-    <script src="<?= base_url('assets/js/demo/datatables-demo.js')?>"></script>
+    <script src="<?= base_url('assets/js/demo/datatables-demo.js') ?>"></script>
 
     <?= $this->renderSection('scripts') ?>
 </body>
+<?= $this->renderSection('script') ?>
+
 
 </html>
