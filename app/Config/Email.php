@@ -47,7 +47,6 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    // TODO: CHANGE
     public $SMTPHost = 'smtp-relay.sendinblue.com';
 
     /**
@@ -55,23 +54,20 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    // TODO: CHANGE
-    public $SMTPUser = '';
+    public $SMTPUser = 'anang@divistant.com';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    // TODO: CHANGE
-    public $SMTPPass = '';
+    public $SMTPPass = '1ws0vTkJgatA8UPx';
 
     /**
      * SMTP Port
      *
      * @var int
      */
-    // TODO: CHANGE IF NEEDED
     public $SMTPPort = 587;
 
     /**
@@ -93,7 +89,6 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    // TODO: CHANGE IF NEEDED
     public $SMTPCrypto = 'tls';
 
     /**

@@ -53,8 +53,7 @@ class ForgotPasswordController extends BaseController
         ];
 
         $email = \Config\Services::email();
-        // $email->setTo($user["email"]);
-        $email->setTo('anang@divistant.com');
+        $email->setTo($user["email"]);
         $email->setFrom('noreply@smaitabbskp.sch.id', 'Reset Passoword');
         
         $email->setSubject("Permintaan perubahan password");
@@ -79,19 +78,20 @@ class ForgotPasswordController extends BaseController
         ");
         if ($email->send()) 
 		{
-            echo 'Email successfully sent';
+            $result = [
+                "message" => "Email terkirim!"
+            ];
         } 
 		else 
 		{
-            $data = $email->printDebugger(['headers']);
-            print_r($data);
+            $this->response->setStatusCode('500');
+            return json_encode([
+                "code" => 5001,
+                "message" => "Error sending email, please contact admin!"
+            ]);
         }
 
         $this->cfm->save($data);
-
-        $result = [
-            "message" => "Email terkirim!"
-        ];
 
         return json_encode($result);
     }
@@ -145,7 +145,8 @@ class ForgotPasswordController extends BaseController
 
         $user["password"] = password_hash($this->request->getVar('pwd'), PASSWORD_BCRYPT);
         $this->model->save($user);
-        // $this->cfm->delete($job["id"]);
+        $this->cfm->delete($job["id"]);
+        $this->cfm->where('valid_until', '<', time())->delete();
 
         return json_encode([
             "message" => "password updated"

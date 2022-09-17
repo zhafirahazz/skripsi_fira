@@ -13,9 +13,9 @@
                         <input class="form-control mt-4" placeholder="Email Pengguna Baru" type="email" name="email" required>
                         <label class="mt-4" for="role">Pilih Level Pengguna</label>
                         <select class="form-control" name="role" required>
-                            <option value="1">Super Admin</option>
-                            <option value="2">Admin</option>
-                            <option value="3">Kepala Sekolah</option>
+                            <?php foreach ($roles as $role) : ?>
+                                <option value="<?= $role["id"] ?>"><?= $role["role_display"] ?></option>
+                            <?php endforeach ?>
                         </select>
                         <input class="form-control mt-4" placeholder="Password Pengguna Baru" type="password" name="password">
                         <div class="text-end mt-4">

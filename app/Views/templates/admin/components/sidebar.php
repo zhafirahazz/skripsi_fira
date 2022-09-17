@@ -14,6 +14,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
+    <?php if(session()->get('role') != 2) :?>
     <!-- Heading -->
     <div class="sidebar-heading">
         Components
@@ -126,6 +127,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
+    <?php endif ?>
     <!-- Heading -->
     <div class="sidebar-heading">
         Addons

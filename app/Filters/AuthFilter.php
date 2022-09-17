@@ -28,6 +28,11 @@ class AuthFilter implements FilterInterface
         if(!session()->get('logged_in')){
             return redirect()->to('/auth/login');
         }
+
+        if(!session()->get('approved')){
+            session()->set('logged_in', false);
+            return redirect()->to('/auth/require-verification');
+        }
     }
 
     /**

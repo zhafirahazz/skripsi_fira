@@ -44,11 +44,15 @@ $routes->group('auth', static function ($route) {
     $route->get('logout', 'Auth\LoginController::logout', ["as" => "logout"]);
     $route->get('forgot-password', 'Auth\ForgotPasswordController::index', ["as" => "auth.forgot.index"]);
     $route->get('reset-password/(:any)', 'Auth\ForgotPasswordController::reset/$1', ["as" => "auth.forgot.reset"]);
+    $route->get('require-verification', 'Management\UserController::requireVerification', ["as" => "auth.verify.required"]);
+    $route->get('verify/(:any)', 'Management\UserController::verify/$1', ["as" => "auth.verify"]);
 });
 
 $routes->group('api', static function ($route){
     $route->post('auth/forgot-password', 'Auth\ForgotPasswordController::send', ["as"=> "auth.forgot.send"]);
     $route->post('auth/update-password', 'Auth\ForgotPasswordController::update', ["as"=> "auth.forgot.update"]);
+    $route->post('auth/verify', 'Management\UserController::sendVerificatin', ["as" => "auth.verify.send"]);
+
 });
 
 $routes->group('admin', ['filter' => 'auth-filter'], static function ($route) {
