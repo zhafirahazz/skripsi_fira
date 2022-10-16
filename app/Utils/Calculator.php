@@ -86,31 +86,34 @@ class Calculator
 
         $cashflows = [];
         $n = 0;
-        $tmp = 0;
+        $tmp = null;
         $b = 0;
         $same = true;
-        $nIndex = 0;
+        $nIndex = null;
         $a = $costs[0]->price;
         for ($i = 0; $i < $length; $i++) {
             $cashflow = $benefits[$i]->nominal - $costs[$i]->price;
-            // init tmp
-            if ($i == 0) {
-                $tmp = $cashflow;
+            error_log($cashflow);
+
+
+            if ($nIndex == null) {
+                if (($b + $cashflow) >= 0) {
+                    $nIndex = $i - 1;
+                    $n = $costs[$i - 1]->name_cost;
+                } else {
+                    $b = $b + $cashflow;
+                }
             }
-
-            if ($b <= 0 && $same) {
-                $b = $b + $cashflow;
-                $n = $costs[$i]->name_cost;
-                $nIndex = $i;
+            if ($nIndex != null) {
+                if ($tmp == null) {
+                    $tmp = $cashflows[$i - 1];
+                } else {
+                    if ($tmp != $cashflow) {
+                        $same = false;
+                    }
+                    $tmp = $cashflow;
+                }
             }
-
-            if ($cashflow != $tmp && $same) {
-                $same = false;
-            }
-
-            // set tmp to current cashflow to compare next
-            $tmp = $cashflow;
-
 
             $cashflow = [
                 "cashflow" => $cashflow,
@@ -122,17 +125,26 @@ class Calculator
         if (sizeof($costs) <= ($nIndex + 1) || sizeof($benefits) <= ($nIndex + 1)) {
             $c = null;
         } else {
-            $c = ($benefits[$nIndex + 1]->nominal - $costs[$nIndex + 1]->price) + $b;
+            $c = ($benefits[$nIndex + 1]->nominal - $costs[$nIndex + 1]->price);
         }
 
+        $b = $benefits[$nIndex]->nominal - $costs[$nIndex]->price;
+        $c = $c + $b;
+        error_log($same ? "TRUE" : "FALSE");
+        error_log($nIndex);
+        // error_log($n);
+        // error_log($a);
+        // error_log($b);
+        // error_log($c);
 
 
         if ($same) {
-            $pp = $a / ($benefits[$nIndex]->nominal - $costs[$nIndex]->price);
+            $pp = $a / ($benefits[$nIndex]->nominal - $costs[$nIndex]->price) * 12;
         } else {
-            $pp = $n + (($a - $b) / ($c - $b));
+            $pp = ($n * 12) + ((($a - $b) / ($c - $b)) * 12);
         }
 
-        return $pp;
+
+        return floor($pp);
     }
 }

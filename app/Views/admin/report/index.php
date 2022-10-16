@@ -235,7 +235,7 @@
                                 <?php endfor ?>
                                 <tr class="row-gray">
                                     <td colspan="4"><strong>Nilai PP</strong></td>
-                                    <td><strong><?= $pp ?> Tahun</strong></td>
+                                    <td><strong><?= $pp ?></strong></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -60,8 +60,7 @@ class ReportController extends BaseController
 
         $pp = Calculator::PP($costs, $benefits);
         $pa = $this->findSettings($settings, 'pp.pa')["value"];
-        $kelayakanPP = $pp < $pa ? "LAYAK" : "TIDAK LAYAK";
-        $messagePP = "Nilai Payback Period adalah $pp tahun (usia proyek $pa tahun), maka proyek dinyatakan $kelayakanPP untuk dilanjutkan";
+        $kelayakanPP = $pp < ($pa * 12) ? "LAYAK" : "TIDAK LAYAK";
 
         $costsROI = $db->query("SELECT SUM(price) as price FROM cost_value ORDER BY name_cost")->getResult();
         $benefitsROI = $db->query("SELECT SUM(nominal) as nominal FROM benefit_value ORDER BY name_benefit")->getResult();
@@ -79,6 +78,11 @@ class ReportController extends BaseController
             $user = $this->user->where('role_id', 1)->first();
             $admin = $user["name"];
         }
+        $tahun = floor($pp/12);
+        $bulan = $pp % 12;
+        $ppString = "$tahun tahun $bulan bulan";
+        $messagePP = "Nilai Payback Period adalah $ppString (usia proyek $pa tahun), maka proyek dinyatakan $kelayakanPP untuk dilanjutkan";
+
 
         return view('admin/report/index', [
             "tc" => $totalCost,
@@ -95,7 +99,7 @@ class ReportController extends BaseController
             "messageNPV" => $messageNPV,
             "irr" => $irr,
             "messageIRR" => $messageIRR,
-            "pp" => $pp,
+            "pp" => $ppString,
             "messagePP" => $messagePP,
             "roi" => $roi,
             "costROI" => $costsROI,
