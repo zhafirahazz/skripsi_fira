@@ -41,11 +41,14 @@ class Calculator
     {
         $top = Calculator::FindNPVClosestToZero($cashflows, 0, 1000, false, true);
         $bottom = Calculator::FindNPVClosestToZero($cashflows, 0, 1000, false, false);
-        $irr = $top["value"] + $top["npv"] / $top["npv"] - $bottom["npv"] * ($bottom["value"] - $top["value"]);
+        $top["npv"] = Calculator::NPV($cashflows, round($top["value"], 2));
+        $bottom["npv"] = Calculator::NPV($cashflows, round($bottom["value"], 2));
+
+        $irr = $top["value"] + (($top["npv"] / ($top["npv"] - $bottom["npv"])) * ($bottom["value"] - $top["value"]));
         return [
             "top" => $top,
             "bottom" => $bottom,
-            "irr" => round($irr, 2)
+            "irr" => round($irr, 4)
         ];
     }
 
