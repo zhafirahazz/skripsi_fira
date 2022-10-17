@@ -13,7 +13,7 @@ class ReportController extends BaseController
     public function __construct()
     {
         $this->settings = new Settings();
-        define("PRECISION", 0.00001);
+        define("PRECISION", 0.01);
         $this->user = new User();
     }
 
@@ -48,12 +48,12 @@ class ReportController extends BaseController
             array_push($cashflows, $cashflow);
         }
 
-        $npv = Calculator::NPV($cashflows, (int) $this->findSettings($settings, 'npv.r'));
+        $npv = Calculator::NPV($cashflows, (float) $this->findSettings($settings, 'npv.r'));
         $kelayakanNPV = $npv > 0 ? "DITERIMA" : "TIDAK DITERIMA";
         $messageNPV = "Nilai NPV adalah $npv maka proyek $kelayakanNPV ";
 
 
-        $irr = Calculator::IRR($cashflows);
+        $irr = Calculator::IRR($cashflows)["irr"];
         $rr = $this->findSettings($settings, 'irr.rr')["value"];
         $kelayakanIRR =  $rr < $irr ? "LAYAK" : "TIDAK LAYAK";
         $messageIRR = "Nilai IRR adalah $irr% (batas : $rr%) maka proyek $kelayakanIRR untuk di lanjutkan";

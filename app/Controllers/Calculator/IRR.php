@@ -17,7 +17,7 @@ class IRR extends BaseController
         $this->model = new BenefitValue();
         $this->model = new CostValue();
         $this->session = session();
-        define("PRECISION", 0.00001);
+        define("PRECISION", 0.01);
         $this->settings =  new Settings();
 
 
@@ -80,7 +80,7 @@ class IRR extends BaseController
             ];
             array_push($cashflows, $cashflow);
         }
-        $irr = Calculator::IRR($cashflows);
+        $irr = Calculator::IRR($cashflows)["irr"];
         $kelayakan = (int) $this->request->getVar("r") < $irr ? "LAYAK" : "TIDAK LAYAK";
         $message = "Nilai IRR adalah $irr% maka proyek $kelayakan untuk di lanjutkan";
         return view('admin/criteria/irr/output', ["irr" => $irr, "message" => $message]);

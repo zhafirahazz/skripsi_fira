@@ -45,7 +45,7 @@ class NPV extends BaseController
         ->where('key', 'npv.r')
         ->first();
 
-        $r['value'] = (int) $this->request->getVar("r");
+        $r['value'] = (float) $this->request->getVar("r");
         $this->settings->save($r);
 
         for ($i = 0; $i < $length; $i++) {

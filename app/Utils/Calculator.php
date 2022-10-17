@@ -37,46 +37,56 @@ class Calculator
         return (($profit / $cost) * 100);
     }
 
-    public static function IRR($cashflows, $top = 100, $bottom = -100, $pivot = 0, $decimal = false)
+    public static function IRR($cashflows)
     {
-        $leftTop = $pivot;
-        $leftBottom = $bottom;
+        $top = Calculator::FindNPVClosestToZero($cashflows, 0, 1000, false, true);
+        $bottom = Calculator::FindNPVClosestToZero($cashflows, 0, 1000, false, false);
+        $irr = $top["value"] + $top["npv"] / $top["npv"] - $bottom["npv"] * ($bottom["value"] - $top["value"]);
+        return [
+            "top" => $top,
+            "bottom" => $bottom,
+            "irr" => round($irr, 2)
+        ];
+    }
 
-
-        $rightTop = $top;
-        $rightBottom = $pivot;
-
+    public static function FindNPVClosestToZero($cashflows, $bottom = 0, $top = 100, $decimal = false, $positive = true)
+    {
         if ($decimal) {
-            $leftPivot = $leftTop - (($leftTop - $leftBottom) / 2);
-            $rightPivot = $rightTop - (($rightTop - $rightBottom) / 2);
+            $pivot = ($top + $bottom) / 2;
         } else {
-            $leftPivot = $leftTop - (round(($leftTop - $leftBottom) / 2));
-            $rightPivot = $rightTop - (round(($rightTop - $rightBottom) / 2));
+            $pivot = floor(($top + $bottom) / 2);
         }
 
-        $left = Calculator::NPV($cashflows, $leftPivot);
-        $right = Calculator::NPV($cashflows, $rightPivot);
+        $topNpv = Calculator::NPV($cashflows, $top);
+        $pivotNpv = Calculator::NPV($cashflows, $pivot);
+        $bottomNpv = Calculator::NPV($cashflows, $bottom);
 
-        // TRIGGERS
-        if (!$decimal) {
-            if (abs($leftPivot - $rightPivot) < 1) {
-                return Calculator::IRR($cashflows, ($pivot + 0.999), $pivot, ($pivot + (0.999 / 2)), true);
+        $topToZero = abs($topNpv - 0);
+        $pivotToZero = abs($pivotNpv - 0);
+        $bottomToZero = abs($bottomNpv - 0);
+
+        $pivotToTop = abs($topToZero - $pivotToZero);
+        $pivotTOBottom = abs($pivotToZero - $bottomToZero);
+
+        error_log("top $top pivot $pivot bottom $bottom : $topNpv $pivotNpv $bottomNpv");
+        error_log("pivotToTop $pivotToTop pivotToBottom $pivotTOBottom");
+
+        if (abs($top - $bottom) < PRECISION) {
+            if ($positive) {
+                return $topNpv > 0 ? ["npv" => round($topNpv, 5), "value" => round($top, 2)] : ["npv" => round($bottomNpv, 5), "value" => round($bottom, 2)];
+            } else {
+                return $topNpv < 0 ? ["npv" => round($topNpv, 5), "value" => round($top, 2)] : ["npv" => round($bottomNpv, 5), "value" => round($bottom, 2)];
             }
-        } else {
-            if (abs($leftPivot - $rightPivot) < PRECISION) {
-                return $pivot;
-            }
         }
 
-        // FAIL SAFE
-        if ($leftPivot > $top || $leftPivot < $bottom || $rightPivot > $top  || $rightPivot < $bottom) {
-            return $pivot;
-        }
-
-        if (abs($left) < abs($right)) {
-            return Calculator::IRR($cashflows, $leftTop, $leftBottom, $leftPivot, $decimal);
+        if (($bottomNpv < 0 && 0 < $pivotNpv)) {
+            return Calculator::FindNPVClosestToZero($cashflows, $bottom, $pivot, true, $positive);
+        } else if ($pivotNpv < 0 && 0 < $topNpv) {
+            return Calculator::FindNPVClosestToZero($cashflows, $pivot, $top, true, $positive);
+        } else if ($topNpv < 0 && 0 < $pivotNpv) {
+            return Calculator::FindNPVClosestToZero($cashflows, $pivot, $top, true, $positive);
         } else {
-            return Calculator::IRR($cashflows, $rightTop, $rightBottom, $rightPivot, $decimal);
+            return Calculator::FindNPVClosestToZero($cashflows, $bottom, $pivot, true, $positive);
         }
     }
 
@@ -130,13 +140,6 @@ class Calculator
 
         $b = $benefits[$nIndex]->nominal - $costs[$nIndex]->price;
         $c = $c + $b;
-        error_log($same ? "TRUE" : "FALSE");
-        error_log($nIndex);
-        // error_log($n);
-        // error_log($a);
-        // error_log($b);
-        // error_log($c);
-
 
         if ($same) {
             $pp = $a / ($benefits[$nIndex]->nominal - $costs[$nIndex]->price) * 12;
