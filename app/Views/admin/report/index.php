@@ -102,6 +102,12 @@
 
                         <table border="1" class="mt-4" style="width: 100%">
                             <tr class="row-gray">
+                                <td><strong>Kriteria :</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Jika BCR < 1 maka proyek tidak layak untuk dilakukan, sedangkan jika BCR ≥ 1 maka proyek layak untuk dilakukan.</td>
+                            </tr>
+                            <tr class="row-gray">
                                 <td><strong>Kesimpulan :</strong></td>
                             </tr>
                             <tr>
@@ -142,6 +148,7 @@
                                         <td>Rp<?= number_format($cashflows[$i] != null ? $cashflows[$i]["cashflow"] : 0, 0, ',', '.') ?></td>
                                     </tr>
                                 <?php endfor ?>
+
                                 <tr class="row-gray">
                                     <td colspan="2"><strong>Nilai NPV (r = <?= $npvr ?>)</strong></td>
                                     <td><strong><?= $npv ?></strong></td>
@@ -150,6 +157,12 @@
                         </table>
 
                         <table border="1" class="mt-4" style="width: 100%">
+                            <tr class="row-gray">
+                                <td><strong>Kriteria :</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Jika NPV bernilai positif, maka proyek diterima, sedangkan apabila NPV bernilai negatif, maka proyek tidak diterima.</td>
+                            </tr>
                             <tr class="row-gray">
                                 <td><strong>Kesimpulan :</strong></td>
                             </tr>
@@ -196,6 +209,12 @@
                             </table>
                             <table border="1" class="mt-4" style="width: 100%">
                                 <tr class="row-gray">
+                                    <td><strong>Kriteria :</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Jika IRR lebih besar dari tingkat pengembalian yang sudah ditetapkan maka proyek layak dijalankan, tetapi jika IRR lebih kecil dari tingkat pengembalian yang sudah ditetapkan maka proyek tidak layak dijalankan/ ditolak.</td>
+                                </tr>
+                                <tr class="row-gray">
                                     <td><strong>Kesimpulan :</strong></td>
                                 </tr>
                                 <tr>
@@ -241,6 +260,12 @@
                         </table>
                         <table border="1" class="mt-4" style="width: 100%">
                             <tr class="row-gray">
+                                <td><strong>Kriteria :</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Proyek layak dijalankan/ diterima apabila PP lebih cepat dari umur investasi, sedangkan proyek tidak layak dijalankan/ ditolak apabila PP lebih lama dari umur investasi.</td>
+                            </tr>
+                            <tr class="row-gray">
                                 <td><strong>Kesimpulan :</strong></td>
                             </tr>
                             <tr>
@@ -269,8 +294,8 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td><?= $costROI[0]->price ?></td>
-                                    <td><?= $benefitROI[0]->nominal ?></td>
+                                    <td>Rp<?= number_format($costROI[0]->price != null ? $costROI[0]->price : 0, 0, ',', '.') ?></td>
+                                    <td>Rp<?= number_format($benefitROI[0]->nominal != null ? $benefitROI[0]->nominal : 0, 0, ',', '.') ?></td>
                                 </tr>
                                 <tr class="row-gray">
                                     <td colspan="2"><strong>Nilai ROI</strong></td>
@@ -279,6 +304,12 @@
                             </tbody>
                         </table>
                         <table border="1" class="mt-4" style="width: 100%">
+                            <tr class="row-gray">
+                                <td><strong>Kriteria :</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Proyek dapat diterima/ layak apabila ROI > 0%, sedangkan proyek ditolak/ tidak layak apabila ROI < 0%.</td>
+                            </tr>
                             <tr class="row-gray">
                                 <td><strong>Kesimpulan :</strong></td>
                             </tr>

@@ -68,7 +68,7 @@ class ReportController extends BaseController
         $roi = Calculator::ROI($costsROI[0]->price, ($benefitsROI[0]->nominal - $costsROI[0]->price));
 
         $kelayakanROI = $roi > 0 ? "LAYAK" : "TIDAK LAYAK";
-        $messageROI = "Nilai Payback Period adalah $roi %, maka proyek dinyatakan $kelayakanROI untuk dilanjutkan";
+        $messageROI = "Nilai ROI adalah $roi %, maka proyek dinyatakan $kelayakanROI untuk dilanjutkan";
 
         $kepsek = $this->user->where('role_id', 2)->first();
 
