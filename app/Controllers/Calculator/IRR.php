@@ -72,7 +72,12 @@ class IRR extends BaseController
         $r['value'] = (int) $this->request->getVar("r");
         $this->settings->save($r);
 
+        $totalCost = 0;
+        $totalBenefit = 0;
+
         for ($i = 0; $i < $length; $i++) {
+            $totalCost = $totalCost + $costs[$i]->price;
+            $totalBenefit =  $totalBenefit + $benefits[$i]->nominal;
             $cashflow = $benefits[$i]->nominal - $costs[$i]->price;
             $cashflow = [
                 "cashflow" => $cashflow,
