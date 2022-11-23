@@ -18,10 +18,11 @@ class ProfileController extends BaseController
     }
     public function index()
     {
+        $id = $this->session->get('uid');
         $profiles = $this->model
             ->select('user.id, user.name, user.email, role.role_display')
             ->join('role', 'user.role_id = role.id')
-            ->first();
+            ->where('user.id', $id)->first();
 
         return view('admin/profile/index', ["profiles" => $profiles]);
     }
@@ -39,33 +40,33 @@ class ProfileController extends BaseController
     }
 
 
-    public function updatePassword($id){
-       try{
-        $data = [
-            "old_pwd" => $this->request->getPost('password'),
-            "new_pwd" => $this->request->getPost('new_password'),
-            "c_pwd" => $this->request->getPost('c_password'),
-        ];
+    public function updatePassword($id)
+    {
+        try {
+            $data = [
+                "old_pwd" => $this->request->getPost('password'),
+                "new_pwd" => $this->request->getPost('new_password'),
+                "c_pwd" => $this->request->getPost('c_password'),
+            ];
 
-        if($data["new_pwd"] != $data["c_pwd"]){
-            throw new Exception("Password dan konfirmasi tidak sesuai!");
+            if ($data["new_pwd"] != $data["c_pwd"]) {
+                throw new Exception("Password dan konfirmasi tidak sesuai!");
+            }
+
+            $profile = $this->model->where('id', $id)->first();
+            if (!password_verify($data["old_pwd"], $profile["password"])) {
+                throw new Exception("Password lama salah!");
+            }
+
+            $profile["password"] = password_hash($data["new_pwd"], PASSWORD_BCRYPT);
+            $this->model->save($profile);
+            $this->session->setFlashdata('success', "Data berhasil diubah");
+            return redirect()->to(route_to('profile.index'));
+        } catch (Exception $e) {
+
+            $this->session->setFlashdata('error', $e->getMessage());
+            return redirect()->to(route_to('profile.index'));
         }
-
-        $profile = $this->model->where('id', $id)->first();
-        if (!password_verify($data["old_pwd"], $profile["password"])) {
-            throw new Exception("Password lama salah!");
-        }
-
-        $profile["password"] = password_hash($data["new_pwd"], PASSWORD_BCRYPT);
-        $this->model->save($profile);
-        $this->session->setFlashdata('success', "Data berhasil diubah");
-        return redirect()->to(route_to('profile.index'));
-
-       }catch(Exception $e){
-
-        $this->session->setFlashdata('error', $e->getMessage());
-        return redirect()->to(route_to('profile.index'));
-       }
     }
 
     public function update($id)
