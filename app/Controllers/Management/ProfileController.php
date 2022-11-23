@@ -18,9 +18,11 @@ class ProfileController extends BaseController
     }
     public function index()
     {
+        $id = $this->session->get('uid');
         $profiles = $this->model
             ->select('user.id, user.name, user.email, role.role_display')
             ->join('role', 'user.role_id = role.id')
+            ->where('user.id', $id)
             ->first();
 
         return view('admin/profile/index', ["profiles" => $profiles]);
