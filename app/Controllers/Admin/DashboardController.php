@@ -42,7 +42,7 @@ class DashboardController extends BaseController
                 return $element->count;
             }, $student_count)
         ];
-        $cost_statistics = $db->query("SELECT sum(quantity * price) as total, A.category_id,B.category_name, B.category_display FROM (SELECT cost.id, cost.quantity,cost.category_id, (select sum(cost_item.quantity * cost_item.unit_price) from cost_item WHERE cost_item.cost_id = cost.id) as price from cost) as A JOIN category as B ON A.category_id = B.id GROUP BY A.category_id ORDER BY A.category_id")->getResult();
+        $cost_statistics = $db->query("SELECT sum(quantity * price) as total, A.category_id,B.category_name, B.category_display FROM (SELECT cost.id, cost.quantity,cost.category_id, (select avg(cost_item.quantity * cost_item.unit_price) from cost_item WHERE cost_item.cost_id = cost.id) as price from cost) as A JOIN category as B ON A.category_id = B.id GROUP BY A.category_id ORDER BY A.category_id")->getResult();
 
         $benefit_statistics = $db->query("SELECT SUM(A.quantity * A.unit_price) as total, B.category_display FROM benefit as A JOIN category as B ON A.category_id = B.id GROUP BY A.category_id;")->getResult();
 
